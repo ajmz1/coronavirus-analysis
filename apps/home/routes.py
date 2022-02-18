@@ -7,22 +7,34 @@ from apps.home import blueprint
 from flask import render_template, request
 from jinja2 import TemplateNotFound
 
-import pandas as pd
-import os.path as path
+from apps.data_functions import DataManager
+from pathlib import Path
+import json
+import numpy as np
 
-file_path = path.abspath(path.join('routes.py', "../"))
-df_full = pd.read_csv(file_path + '\\tests\\full-data.csv')
-df_usa = df_full[df_full['location'] == 'United States']
+csv_file_path = str(Path().resolve()) + '\\data\\full-data.csv'
+a = DataManager(csv_file_path)
 
 
 @blueprint.route('/index')
 @blueprint.route('/')
 def index():
-    colNames = ['new_cases', 'new_deaths', 'total_cases', 'total_deaths', 'stringency_index',
-                'population']
-    data_fetched = df_usa.date.iloc[-1]
-    data = [data_fetched]
-    return render_template('home/index.html', segment='index', data=data)
+    # This is the point where we load in data
+    df_usa = a.filter_country('United States')
+
+    # Create "as of" date
+    date_asof = df_usa['date'].iloc[-1].strftime('%d-%B-%Y').split('-')
+    date_asof = date_asof[0] + ' ' + date_asof[1] + ' ' + date_asof[2]
+
+    # Create the date column
+    date = df_usa['date'].dt.strftime('%b-%y').to_numpy()
+    date_dense = df_usa['date'].dt.strftime('%d-%b-%y').to_numpy()
+
+    # Populate the data list
+    data = [date_asof, date, df_usa.total_cases, df_usa.total_deaths,
+            df_usa.new_cases_smoothed, df_usa.new_deaths_smoothed, date_dense, df_usa.icu_patients,
+            df_usa.hosp_patients]
+    return render_template('home/index.html', segment='index', data=data, title='COVID-19 Home')
 
 
 @blueprint.route('/<template>')
