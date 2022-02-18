@@ -7,11 +7,22 @@ from apps.home import blueprint
 from flask import render_template, request
 from jinja2 import TemplateNotFound
 
-print(blueprint)
-@blueprint.route('/index')
-def index():
+import pandas as pd
+import os.path as path
 
-    return render_template('home/index.html', segment='index')
+file_path = path.abspath(path.join('routes.py', "../"))
+df_full = pd.read_csv(file_path + '\\tests\\full-data.csv')
+df_usa = df_full[df_full['location'] == 'United States']
+
+
+@blueprint.route('/index')
+@blueprint.route('/')
+def index():
+    colNames = ['new_cases', 'new_deaths', 'total_cases', 'total_deaths', 'stringency_index',
+                'population']
+    data_fetched = df_usa.date.iloc[-1]
+    data = [data_fetched]
+    return render_template('home/index.html', segment='index', data=data)
 
 
 @blueprint.route('/<template>')

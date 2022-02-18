@@ -8,8 +8,8 @@ from sys import exit
 from decouple import config
 
 from apps.config import config_dict
-#from apps import create_app, db
 from apps import create_app
+
 
 # WARNING: Don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=True, cast=bool)
