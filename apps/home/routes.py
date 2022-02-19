@@ -31,9 +31,21 @@ def index():
     date_dense = df_usa['date'].dt.strftime('%d-%b-%y').to_numpy()
 
     # Populate the data list
-    data = [date_asof, date, df_usa.total_cases, df_usa.total_deaths,
-            df_usa.new_cases_smoothed, df_usa.new_deaths_smoothed, date_dense, df_usa.icu_patients,
-            df_usa.hosp_patients]
+    data = [date_asof,
+            date,
+            df_usa.total_cases,
+            df_usa.total_deaths,
+            df_usa.new_cases_smoothed,
+            df_usa.new_deaths_smoothed,
+            date_dense,
+            df_usa.icu_patients,
+            df_usa.hosp_patients,
+            df_usa.total_vaccinations,
+            df_usa.total_boosters,
+            df_usa.people_vaccinated,
+            df_usa.new_vaccinations_smoothed,
+            df_usa.people_fully_vaccinated
+            ]
     return render_template('home/index.html', segment='index', data=data, title='COVID-19 Home')
 
 

@@ -97,7 +97,7 @@ Testing Index
                 </div>
             </div>
             <ol class="breadcrumb mb-4">
-                <li class="breadcrumb-item active">Hospitalizations and Testing</li>
+                <li class="breadcrumb-item active">Hospitalizations and Vaccinations</li>
             </ol>
             <div class="row">
                 <div class="col-xl-6">
@@ -113,7 +113,7 @@ Testing Index
                     <div class="card mb-4">
                         <div class="card-header">
                             <i class="fas fa-chart-bar me-1"></i>
-                            Vaccination Status
+                            Vaccination Progress
                         </div>
                         <div class="card-body"><canvas id="testing" width="100%" height="40"></canvas></div>
                     </div>
@@ -235,11 +235,17 @@ var myLineChart = new Chart(ctx, {
             {% endfor %}],
     datasets: [{
       label: "Total Cases",
-      lineTension: 0.,
       backgroundColor: "rgba(2,117,216,0.2)",
       borderColor: "rgba(2,117,216,1)",
       pointRadius: 0,
-      pointHoverRadius: 5,
+      pointBackgroundColor: "rgba(2,117,216,1)",
+      pointBorderColor: "rgba(2,117,216,1)",
+      pointBorderWidth: 2,
+      pointHoverRadius: 8,
+      pointHoverBackgroundColor: "rgba(255,255,255, 0.)",
+      pointHoverBorderColor: "rgba(0, 0, 0, 1)",
+      pointHoverBorderWidth: 2,
+      pointHitRadius: 5,
       data: [{% for item in data[2] %}
                 "{{ item }}",
               {% endfor %}],
@@ -251,15 +257,17 @@ var myLineChart = new Chart(ctx, {
       xAxes: [{
         gridLines: {
           display: false
+        },
+        ticks: {
+            maxTicksLimit: 20,
         }
       }],
       yAxes: [{
         ticks: {
-          // Create scientific notation labels
-          callback: function(value, index, values) {
-            return value.toExponential(1);
-          },
-          maxTicksLimit: 5
+          beginAtZero: true,
+          userCallback: function(value, index, values) {
+                return value.toLocaleString();   // this is all we need
+          }
         },
         gridLines: {
           color: "rgba(0, 0, 0, .125)",
@@ -287,12 +295,18 @@ var myLineChart = new Chart(ctx, {
                 "{{ item }}",
             {% endfor %}],
     datasets: [{
-      label: "Total Cases",
-      lineTension: 0.,
+      label: "Total Deaths",
       backgroundColor: "rgba(2,117,216,0.2)",
       borderColor: "rgba(2,117,216,1)",
       pointRadius: 0,
-      pointHoverRadius: 5,
+      pointBackgroundColor: "rgba(2,117,216,1)",
+      pointBorderColor: "rgba(2,117,216,1)",
+      pointBorderWidth: 2,
+      pointHoverRadius: 8,
+      pointHoverBackgroundColor: "rgba(255,255,255, 0.)",
+      pointHoverBorderColor: "rgba(0, 0, 0, 1)",
+      pointHoverBorderWidth: 2,
+      pointHitRadius: 5,
       data: [{% for item in data[3] %}
                 "{{ item }}",
               {% endfor %}],
@@ -304,15 +318,19 @@ var myLineChart = new Chart(ctx, {
       xAxes: [{
         gridLines: {
           display: false
+        },
+        ticks: {
+            maxTicksLimit: 20,
         }
       }],
       yAxes: [{
         ticks: {
-          // Create scientific notation labels
-          callback: function(value, index, values) {
-            return value.toExponential(1);
+          beginAtZero: true,
+          userCallback: function(value, index, values) {
+                return value.toLocaleString();   // this is all we need
           },
-          maxTicksLimit: 5
+          minTicksLimit: 5,
+          //maxTicksLimit: 5
         },
         gridLines: {
           color: "rgba(0, 0, 0, .125)",
@@ -340,12 +358,18 @@ var myLineChart = new Chart(ctx, {
                 "{{ item }}",
             {% endfor %}],
     datasets: [{
-      label: "Total Cases",
-      lineTension: 0.,
+      label: "New Cases",
       backgroundColor: "rgba(2,117,216,0.2)",
       borderColor: "rgba(2,117,216,1)",
       pointRadius: 0,
-      pointHoverRadius: 5,
+      pointBackgroundColor: "rgba(2,117,216,1)",
+      pointBorderColor: "rgba(2,117,216,1)",
+      pointBorderWidth: 2,
+      pointHoverRadius: 8,
+      pointHoverBackgroundColor: "rgba(255,255,255, 0.)",
+      pointHoverBorderColor: "rgba(0, 0, 0, 1)",
+      pointHoverBorderWidth: 2,
+      pointHitRadius: 5,
       data: [{% for item in data[4] %}
                 "{{ item }}",
               {% endfor %}],
@@ -357,11 +381,18 @@ var myLineChart = new Chart(ctx, {
       xAxes: [{
         gridLines: {
           display: false
-        }
+        },
+        ticks: {
+            maxTicksLimit: 20,
+        },
       }],
       yAxes: [{
         ticks: {
-          maxTicksLimit: 5
+          //maxTicksLimit: 5
+            beginAtZero: true,
+            userCallback: function(value, index, values) {
+                return value.toLocaleString();   // this is all we need
+            }
         },
         gridLines: {
           color: "rgba(0, 0, 0, .125)",
@@ -389,12 +420,18 @@ var myLineChart = new Chart(ctx, {
                 "{{ item }}",
             {% endfor %}],
     datasets: [{
-      label: "Total Cases",
-      lineTension: 0.,
+      label: "New Deaths",
       backgroundColor: "rgba(2,117,216,0.2)",
       borderColor: "rgba(2,117,216,1)",
       pointRadius: 0,
-      pointHoverRadius: 5,
+      pointBackgroundColor: "rgba(2,117,216,1)",
+      pointBorderColor: "rgba(2,117,216,1)",
+      pointBorderWidth: 2,
+      pointHoverRadius: 8,
+      pointHoverBackgroundColor: "rgba(255,255,255, 0.)",
+      pointHoverBorderColor: "rgba(0, 0, 0, 1)",
+      pointHoverBorderWidth: 2,
+      pointHitRadius: 5,
       data: [{% for item in data[5] %}
                 "{{ item }}",
               {% endfor %}],
@@ -406,6 +443,9 @@ var myLineChart = new Chart(ctx, {
       xAxes: [{
         gridLines: {
           display: false
+        },
+        ticks: {
+            maxTicksLimit: 20,
         }
       }],
       yAxes: [{
@@ -428,27 +468,50 @@ var myLineChart = new Chart(ctx, {
 // Set new default font family and font color to mimic Bootstrap's default styling
 Chart.defaults.global.defaultFontFamily = '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
 Chart.defaults.global.defaultFontColor = '#292b2c';
-
-// Area Chart Example
 var ctx = document.getElementById("hospitalPatients");
 var myLineChart = new Chart(ctx, {
-  type: 'bar',
+  type: 'line',
   data: {
-    labels: [{% for item in data[6] %}
+    labels: [{% for item in data[1] %}
                 "{{ item }}",
             {% endfor %}],
     datasets: [{
-      label: "Total Cases",
-      lineTension: 0.,
-      backgroundColor: "rgba(2,117,216,0.2)",
-      borderColor: "rgba(2,117,216,1)",
+      label: "ICU Patients",
+      backgroundColor: "rgba(255, 127, 14, 0.4)",
+      borderColor: "rgba(255, 127, 14, 1)",
       pointRadius: 0,
-      pointHoverRadius: 5,
+      pointBackgroundColor: "rgba(255, 127, 14, 1)",
+      pointBorderColor: "rgba(255, 127, 14, 1)",
+      pointBorderWidth: 2,
+      pointHoverRadius: 8,
+      pointHoverBackgroundColor: "rgba(255, 127, 14, 0.)",
+      pointHoverBorderColor: "rgba(255, 127, 14, 1)",
+      pointHoverBorderWidth: 2,
+      pointHitRadius: 5,
       data: [{% for item in data[7] %}
                 "{{ item }}",
               {% endfor %}],
               spanGaps: true
-    }],
+    },
+    {
+      label: "Hospital Patients",
+      backgroundColor: "rgba(2,117,216,0.2)",
+      borderColor: "rgba(2,117,216,1)",
+      pointRadius: 0,
+      pointBackgroundColor: "rgba(2,117,216,1)",
+      pointBorderColor: "rgba(2,117,216,1)",
+      pointBorderWidth: 2,
+      pointHoverRadius: 8,
+      pointHoverBackgroundColor: "rgba(255,255,255, 0.)",
+      pointHoverBorderColor: "rgba(0, 0, 0, 1)",
+      pointHoverBorderWidth: 2,
+      pointHitRadius: 5,
+      data: [{% for item in data[8] %}
+                "{{ item }}",
+              {% endfor %}],
+              spanGaps: true
+    }
+    ],
   },
   options: {
     scales: {
@@ -457,15 +520,23 @@ var myLineChart = new Chart(ctx, {
           display: false
         },
         ticks: {
-          //maxTicksLimit: 6
-          min: "10-Jul-20",
+          beginAtZero: true,
+          userCallback: function(value, index, values) {
+                return value.toLocaleString();   // this is all we need
+          },
+          maxTicksLimit: 20,
+          min: "Jul-20",
         }
       }],
       yAxes: [{
         ticks: {
+          beginAtZero: true,
+          userCallback: function(value, index, values) {
+                return value.toLocaleString();   // this is all we need
+          },
           //min: 0,
           //max: 15000,
-          maxTicksLimit: 5
+          maxTicksLimit: 10
         },
         gridLines: {
           display: true
@@ -473,7 +544,7 @@ var myLineChart = new Chart(ctx, {
       }],
     },
     legend: {
-      display: false
+      display: true
     }
   }
 });
@@ -483,8 +554,6 @@ var myLineChart = new Chart(ctx, {
 // Set new default font family and font color to mimic Bootstrap's default styling
 Chart.defaults.global.defaultFontFamily = '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
 Chart.defaults.global.defaultFontColor = '#292b2c';
-
-// Area Chart Example
 var ctx = document.getElementById("testing");
 var myLineChart = new Chart(ctx, {
   type: 'line',
@@ -493,40 +562,116 @@ var myLineChart = new Chart(ctx, {
                 "{{ item }}",
             {% endfor %}],
     datasets: [{
-      label: "Total Cases",
+      label: "New Vaccinations",
+      yAxisID: 'A',
       lineTension: 0.,
-      backgroundColor: "rgba(2,117,216,0.2)",
-      borderColor: "rgba(2,117,216,1)",
+      backgroundColor: "rgba(255, 127, 14, 0.4)",
+      borderColor: "rgba(255, 127, 14, 1)",
       pointRadius: 0,
+      pointBackgroundColor: "rgba(255, 127, 14, 1)",
+      pointBorderColor: "rgba(255, 127, 14, 1)",
+      pointBorderWidth: 2,
       pointHoverRadius: 5,
-      data: [{% for item in data[5] %}
+      pointHoverBackgroundColor: "rgba(255, 127, 14, 0.01)",
+      pointHoverBorderColor: "rgba(255, 127, 14, 1)",
+      pointHoverBorderWidth: 2,
+      pointHitRadius: 5,
+      data: [{% for item in data[12] %}
                 "{{ item }}",
               {% endfor %}],
               spanGaps: true
-    }],
+    },
+    {
+      label: "People Vaccinated",
+      yAxisID: 'B',
+      fill: false,
+      lineTension: 0.,
+      //backgroundColor: "rgba(2,117,216, 1.)",
+      borderColor: "rgba(2,117,216, 1)",
+      pointRadius: 0,
+      pointBackgroundColor: "rgba(2,117,216, 1)",
+      pointBorderColor: "rgba(2,117,216, 1)",
+      pointBorderWidth: 2,
+      pointHoverRadius: 5,
+      pointHoverBackgroundColor: "rgba(2,117,216, 0.4)",
+      pointHoverBorderColor: "rgba(2,117,216, 0.4)",
+      pointHoverBorderWidth: 2,
+      pointHitRadius: 1,
+      data: [{% for item in data[11] %}
+                "{{ item }}",
+              {% endfor %}],
+              spanGaps: true
+    },
+    {
+      label: "People Fully Vaccinated",
+      yAxisID: 'B',
+      fill: false,
+      lineTension: 0.,
+      //backgroundColor: "rgba(44, 160, 44, 0.4)",
+      borderColor: "rgba(44, 160, 44,1)",
+      pointRadius: 0,
+      pointHoverRadius: 5,
+      data: [{% for item in data[13] %}
+                "{{ item }}",
+              {% endfor %}],
+              spanGaps: true
+    },
+    ],
   },
   options: {
     scales: {
       xAxes: [{
         gridLines: {
           display: false
-        }
+        },
+        ticks: {
+            maxTicksLimit: 10,
+            min: "Dec-20",
+            },
       }],
       yAxes: [{
+        id: 'A',
+        type: 'linear',
+        position: 'left',
         ticks: {
-          maxTicksLimit: 5
+          beginAtZero: true,
+          userCallback: function(value, index, values) {
+                return value.toLocaleString();   // this is all we need
+          },
+          maxTicksLimit: 10
         },
         gridLines: {
           color: "rgba(0, 0, 0, .125)",
         }
-      }],
+      },
+      {
+        id: 'B',
+        position: 'right',
+        ticks: {
+          //beginAtZero: true,
+          userCallback: function(value, index, values) {
+                return value.toLocaleString();   // this is all we need
+          },
+          maxTicksLimit: 10
+        },
+        gridLines: {
+            display: false
+          //color: "rgba(0, 0, 0, .125)",
+        }
+      }
+      ],
     },
     legend: {
-      display: false
+      display: true
     }
   }
 });
 </script>
 
-
+<!-- Make axis scientific notation with 1 decimal place
+// Create scientific notation labels
+callback: function(value, index, values) {
+return value.toExponential(1);
+},
+-->
 {% endblock javascripts %}
