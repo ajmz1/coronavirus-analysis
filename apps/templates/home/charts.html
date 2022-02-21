@@ -24,9 +24,13 @@
             <div class="card mb-4">
                 <div class="card-header">
                     <i class="fas fa-chart-area me-1"></i>
-                    Area Chart Example
+                    My Edited plot
                 </div>
-                <div class="card-body"><canvas id="myAreaChart" width="100%" height="30"></canvas></div>
+                <div class="card-body">
+                    <!-- <div class="chart" id="myAreaChart" width="100%" height="30"></div> -->
+                    <div class="chart" id="myAreaChart" width="100%" height="100%"></div>
+                </div>
+                <!-- <canvas id="myAreaChart" width="100%" height="30"></canvas> -->
                 <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
             </div>
             <div class="row">
@@ -56,12 +60,62 @@
 
 {% endblock content %}
 
-<!-- Specific Page JS goes HERE  -->
+
+
 {% block javascripts %}
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script>
+        var x = [{% for item in data[0] %}
+                   "{{ item }}",
+                 {% endfor %}];
+        var y = {{ data[1] }};
+
+
+        var trace = {
+            x: x,
+            y: y,
+            type: 'scatter'
+        };
+
+        var config = {'responsive': true}
+        var layout = {autosize: true,
+                      margin: {
+                                l: 50,
+                                r: 50,
+                                b: 90,
+                                t: 50,
+                                pad: 2
+                              },
+                      xaxis: {
+                                tickangle: 90
+                             }
+                      }
+
+        Plotly.newPlot('myAreaChart', [trace], layout, config);
+    </script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-    <script src="/static/assets/demo/chart-area-demo.js"></script>
     <script src="/static/assets/demo/chart-bar-demo.js"></script>
     <script src="/static/assets/demo/chart-pie-demo.js"></script>
 
 {% endblock javascripts %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
